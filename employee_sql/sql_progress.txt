@@ -78,3 +78,10 @@ INNER JOIN employees ON
 SELECT first_name, last_name, sex
 FROM employees
 WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
+
+
+SELECT employees.emp_no, employees.last_name, employees.first_name, dept_emp.dept_no, departments.dept_name
+FROM employees, departments, dept_emp
+WHERE employees.emp_no = dept_emp.emp_no AND dept_emp.dept_no = departments.dept_no AND departments.dept_name = 'Sales';
+
+

@@ -46,7 +46,10 @@ FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
 
-
+SELECT employees.emp_no, employees.first_name, employees.last_name, employees.sex, salaries.salary 
+from salaries
+INNER JOIN employees ON
+	employees.emp_no = salaries.emp_no;
 
 
 

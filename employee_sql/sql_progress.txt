@@ -60,19 +60,17 @@ FROM dept_manager
 INNER JOIN departments ON
 	departments.dept_no = dept_manager.dept_no;
 
---SELECT employees.last_name, employees.first_name, employees.emp_no
---FROM dept_manager
---INNER JOIN employees ON
---	employees.emp_no = dept_manager.emp_no;
-    
---SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no
---FROM dept_manager
---INNER JOIN departments ON
---	departments.dept_no = dept_manager.dept_no;
-
 SELECT employees.last_name, employees.first_name, employees.emp_no
 FROM dept_manager
 INNER JOIN employees ON
 	employees.emp_no = dept_manager.emp_no;    
     
+SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no
+FROM dept_manager
+INNER JOIN departments ON
+	departments.dept_no = dept_manager.dept_no;
 
+SELECT employees.last_name, employees.first_name, employees.emp_no
+FROM dept_manager
+INNER JOIN employees ON
+	employees.emp_no = dept_manager.emp_no;

@@ -1,16 +1,22 @@
---DROP TABLE IF EXISTS departments CASCADE;
+-- DROP TABLE IF EXISTS departments CASCADE;
+-- DROP TABLE IF EXISTS titles CASCADE;
+-- DROP TABLE IF EXISTS employees CASCADE;
+-- DROP TABLE IF EXISTS salaries CASCADE;
+-- DROP TABLE IF EXISTS dept_emp CASCADE;
+-- DROP TABLE IF EXISTS dept_manager CASCADE;
+
 CREATE TABLE departments(
 	dept_no VARCHAR(255) PRIMARY KEY,
 	dept_name VARCHAR(255)
 );
 
--- DROP TABLE IF EXISTS titles CASCADE;
+
 CREATE TABLE titles(
 	title_id VARCHAR(255) PRIMARY KEY,
 	title VARCHAR(255)
 );
 
--- DROP TABLE IF EXISTS employees CASCADE;
+
 CREATE TABLE employees(
 	emp_no INT PRIMARY KEY,
 	emp_title VARCHAR(255),
@@ -22,14 +28,14 @@ CREATE TABLE employees(
 	hire_date DATE
 );
 
--- DROP TABLE IF EXISTS salaries CASCADE;
+
 CREATE TABLE salaries(
 	emp_no INT,
 	FOREIGN KEY (emp_no) REFERENCES employees(emp_no),
 	salary INT
 );
 
--- DROP TABLE IF EXISTS dept_emp CASCADE;
+
 CREATE TABLE dept_emp(
 	emp_no INT,
 	FOREIGN KEY (emp_no) REFERENCES employees(emp_no), 
@@ -37,7 +43,7 @@ CREATE TABLE dept_emp(
 	FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
--- DROP TABLE IF EXISTS dept_manager CASCADE;
+
 CREATE TABLE dept_manager(
 	dept_no VARCHAR(255),
 	emp_no INT,
@@ -46,35 +52,30 @@ FOREIGN KEY (dept_no) REFERENCES departments(dept_no)
 );
 
 
+
+
 SELECT employees.emp_no, employees.first_name, employees.last_name, employees.sex, salaries.salary 
-from salaries
+FROM salaries
 INNER JOIN employees ON
 	employees.emp_no = salaries.emp_no;
+
 
 SELECT first_name, last_name, hire_date
 FROM employees
 WHERE hire_date BETWEEN '01/01/1986' AND '12/31/1986';
 
-SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no
-FROM dept_manager
-INNER JOIN departments ON
-	departments.dept_no = dept_manager.dept_no;
 
-SELECT employees.last_name, employees.first_name, employees.emp_no
+SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no, employees.last_name, employees.first_name
 FROM dept_manager
-INNER JOIN employees ON
-	employees.emp_no = dept_manager.emp_no;    
-    
-SELECT departments.dept_no, departments.dept_name, dept_manager.emp_no
-FROM dept_manager
-INNER JOIN departments ON
-	departments.dept_no = dept_manager.dept_no;
+INNER JOIN departments ON departments.dept_no = dept_manager.dept_no
+INNER JOIN employees ON employees.emp_no = dept_manager.emp_no;
 
-SELECT employees.last_name, employees.first_name, employees.emp_no
-FROM dept_manager
-INNER JOIN employees ON
-	employees.emp_no = dept_manager.emp_no;
-    
+
+SELECT departments.dept_name, employees.last_name, employees.first_name, employees.emp_no
+FROM dept_emp, departments, employees
+WHERE employees.emp_no = dept_emp.emp_no AND departments.dept_no = dept_emp.dept_no;
+
+
 SELECT first_name, last_name, sex
 FROM employees
 WHERE first_name = 'Hercules' AND last_name LIKE 'B%';
